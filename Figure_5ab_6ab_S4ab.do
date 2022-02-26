@@ -155,6 +155,7 @@ graph box bhat1_inter, over(plan, label(alt ticks) )  ///
 	ytitle("Elasticity at average population density")  note("") ///
 	marker(1, msymbol(o) mcolor(maroon%50) mfcolor(maroon%50) mlcolor(maroon%50) msize(vsmall))
 graph export figure_6a_cond_density.pdf, replace
+graph export ga_3.png, replace
 
 graph box bhat2_inter, over(plan, label(alt ticks) )  ///
  	marker(1, msymbol(o) mcolor(maroon%50) mfcolor(maroon%50) mlcolor(maroon%50) msize(vsmall)) ///

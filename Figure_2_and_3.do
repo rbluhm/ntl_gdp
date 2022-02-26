@@ -91,7 +91,6 @@ foreach countryname of local analysiscountries   {
 
 		xtset idn year
 
-
 		if ("`regtype'" == "acreg") {			
 			gen inc_groups_1 = (inc_groups==1)*`xvar'
 			gen inc_groups_2 = (inc_groups==2)*`xvar'	
@@ -114,9 +113,9 @@ foreach countryname of local analysiscountries   {
 		coefplot full_vce, drop(_cons) base vertical  legend(off) plotregion(margin(none)) /// 
 			title("`countryname'")  /// 
 			xlabel(1 "{&beta}{sup:1}" 2 "{&beta}{sup:2}" 3 "{&beta}{sup:3}" 4 "{&beta}{sup:4}") ///
-			ylabel(, angle(vertical)) ///
+			ylabel(, angle(vertical)) ///		
 			saving(gdp_coefs_`countryname'.gph, replace) 	
-
+		
 		if ("`regtype'" == "acreg") {	
 		nlcom   (theta1: _b[inc_groups_1] /_b[inc_groups_1]) ///
 			(theta2: _b[inc_groups_2] /_b[inc_groups_1]) ///

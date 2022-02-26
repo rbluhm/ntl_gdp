@@ -2,7 +2,7 @@ clear *
 set more off 
 
 ** path
-global mainpath "/bigstore/Dropbox/Nighttime_lights_and_DIDs/Draft/Replication/"
+global mainpath "~/Dropbox/Nighttime_lights_and_DIDs/Draft/Replication/"
 cd $mainpath
 		
 * new scheme
