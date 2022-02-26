@@ -2,7 +2,7 @@ clear *
 set more off 
 
 ** path
-global mainpath "/bigstore/Dropbox/Nighttime_lights_and_DIDs/Draft/Replication/"
+global mainpath "~/Dropbox/Nighttime_lights_and_DIDs/Draft/Replication/"
 cd $mainpath
 
 * new scheme
@@ -28,25 +28,30 @@ grstyle color p2markline maroon
 grstyle color p2markfill maroon%50
 grstyle color legend none
 
-
 use ./data/allcountries.dta, clear
 rename idn idn_country
 egen idn = group(country idn_country)
 
-* create initial year variables:
-sort idn year
-drop *_first
-by idn (year): gen ln_gdp_area_real_dmsp_first = ln_gdp_area_real[1]
-by idn (year): gen ln_gdp_pc_real_dmsp_first = ln_gdp_pc_real[1]
-by idn (year): gen ln_gdp_pc_current_dmsp_first = ln_gdp_pc_current[1]
-by idn (year): gen ln_gdp_agri_real_dmsp_first = ln_gdp_agri_real[1]
-by idn (year): gen ln_gdp_ind_real_dmsp_first = ln_gdp_ind_real[1]
-by idn (year): gen ln_gdp_serv_real_dmsp_first = ln_gdp_serv_real[1]
-by idn (year): gen ln_gdp_agri_current_dmsp_first = ln_gdp_agri_current[1]
-by idn (year): gen ln_gdp_ind_current_dmsp_first = ln_gdp_ind_current[1]
-by idn (year): gen ln_gdp_serv_current_dmsp_first = ln_gdp_serv_current[1]
-by idn (year): gen ln_pop_dens_dmsp_first = ln_pop_dens_dmsp[1]
+replace ln_viirs_area = . if year<=2013
+replace ln_viirs_pc = . if year<=2013
 
+* Run for year<2014 for DMSP with extension, redoing the initial year variables:
+keep if year<=2013
+sort idn year
+gen ln_gdp_area_real_dmsp_first = .
+by idn (year): replace ln_gdp_area_real_dmsp_first = ln_gdp_area_real[1]
+by idn (year): replace ln_gdp_pc_real_dmsp_first = ln_gdp_pc_real[1]
+by idn (year): replace ln_gdp_pc_current_dmsp_first = ln_gdp_pc_current[1]
+by idn (year): replace ln_gdp_agri_real_dmsp_first = ln_gdp_agri_real[1]
+by idn (year): replace ln_gdp_ind_real_dmsp_first = ln_gdp_ind_real[1]
+by idn (year): replace ln_gdp_serv_real_dmsp_first = ln_gdp_serv_real[1]
+by idn (year): replace ln_gdp_agri_current_dmsp_first = ln_gdp_agri_current[1]
+by idn (year): replace ln_gdp_ind_current_dmsp_first = ln_gdp_ind_current[1]
+by idn (year): replace ln_gdp_serv_current_dmsp_first = ln_gdp_serv_current[1]
+by idn (year): replace ln_pop_dens_dmsp_first = ln_pop_dens_dmsp[1]
+
+
+replace country = "USA" if country=="USA_gdp"
 
 label var ln_gdp_pc_real "ln(GDP pc in Const Prices)"
 label var ln_gdp_pc_current "Current GDP pc"
@@ -65,7 +70,6 @@ label var ln_gdp_pc_ind_real "ln(Ind GDP pc, Const Prices)"
 label var ln_gdp_pc_serv_real "ln(Serv GDP pc, Const Prices)"
 label var ln_pop_dens_dmsp "ln(Pop Density)"
 label var sumlight_sl "Sum of DMSP Radiance"
-
 
 cd "figures"
 
